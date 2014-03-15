@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class ProductTest {
 
@@ -35,6 +34,6 @@ public class ProductTest {
     @Test
     public void shouldListDiscountWhenPriceDropsAtLeast5Percent() throws Exception {
         instance.changePrice(new Currency(95));
-        assertEquals(Discount.percent(5), instance.currentDiscount());
+        assertEquals(Discount.of(5), instance.currentDiscount());
     }
 }

@@ -16,7 +16,7 @@ public class Product {
         this.price = price;
     }
 
-    public boolean currentDiscount() {
-        return false;
+    public Discount currentDiscount() {
+        return Discount.none();
     }
 }
