@@ -2,6 +2,8 @@ package redpencil;
 
 public class Product {
 
+    private static final Discount MINIMUM_DISCOUNT = Discount.of(5);
+
     private Currency lastPrice;
     private Currency price;
 
@@ -20,6 +22,10 @@ public class Product {
     }
 
     public Discount currentDiscount() {
-        return this.price.discountFrom(this.lastPrice);
+        Discount discount = price.discountFrom(lastPrice);
+        if (discount.compare(MINIMUM_DISCOUNT) < 0) {
+            return Discount.none();
+        }
+        return discount;
     }
 }

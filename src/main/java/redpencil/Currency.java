@@ -15,7 +15,7 @@ public final class Currency {
         this.decimalPositions = localCurrencyFormat().getMaximumFractionDigits();
         requireValidAmount(amount);
         requireValidDecimals(decimals);
-        this.amount = amount * decimalPositions + decimals;
+        this.amount = amount * maxDecimalsValue() + decimals;
     }
 
     public Discount discountFrom(Currency other) {
