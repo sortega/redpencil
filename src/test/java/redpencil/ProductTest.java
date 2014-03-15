@@ -28,18 +28,26 @@ public class ProductTest {
 
     @Test
     public void shouldListNoDiscountForUnchangedPrices() throws Exception {
-        assertEquals(Discount.none(), instance.currentDiscount());
+        assertNoDiscount();
     }
 
     @Test
     public void shouldListDiscountWhenPriceDropsAtLeast5Percent() throws Exception {
         instance.changePrice(new Currency(95));
-        assertEquals(Discount.of(5), instance.currentDiscount());
+        assertDiscount(Discount.of(5));
     }
 
     @Test
     public void shouldNotConsiderADiscountUnder5Percent() throws Exception {
         instance.changePrice(new Currency(95, 50));
-        assertEquals(Discount.none(), instance.currentDiscount());
+        assertNoDiscount();
+    }
+
+    private void assertNoDiscount() {
+        assertDiscount(Discount.none());
+    }
+
+    private void assertDiscount(Discount discount) {
+        assertEquals(discount, instance.currentDiscount());
     }
 }
