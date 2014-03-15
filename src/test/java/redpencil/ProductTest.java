@@ -36,4 +36,10 @@ public class ProductTest {
         instance.changePrice(new Currency(95));
         assertEquals(Discount.of(5), instance.currentDiscount());
     }
+
+    @Test
+    public void shouldNotConsiderADiscountUnder5Percent() throws Exception {
+        instance.changePrice(new Currency(95, 50));
+        assertEquals(Discount.none(), instance.currentDiscount());
+    }
 }
