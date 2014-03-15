@@ -18,6 +18,12 @@ public final class Currency {
         this.amount = amount * decimalPositions + decimals;
     }
 
+    public Discount discountFrom(Currency other) {
+        float difference = other.amount - amount;
+        float percent = difference * 100 / other.amount;
+        return Discount.of(percent);
+    }
+
     private void requireValidAmount(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Invalid amount");
