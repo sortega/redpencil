@@ -6,6 +6,6 @@ public class ProductTest {
 
     @Test
     public void shouldHaveACurrentPrice() throws Exception {
-        new Product();
+        new Product(new Currency());
     }
 }
