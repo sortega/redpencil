@@ -3,6 +3,7 @@ package redpencil;
 public class Product {
 
     private static final Discount MINIMUM_DISCOUNT = Discount.of(5);
+    private static final Discount MAXIMUM_DISCOUNT = Discount.of(30);
 
     private Currency lastPrice;
     private Currency price;
@@ -23,9 +24,14 @@ public class Product {
 
     public Discount currentDiscount() {
         Discount discount = price.discountFrom(lastPrice);
-        if (discount.compare(MINIMUM_DISCOUNT) < 0) {
+        if (!isDiscountInRange(discount)) {
             return Discount.none();
         }
         return discount;
+    }
+
+    private boolean isDiscountInRange(Discount discount) {
+        return discount.compare(MINIMUM_DISCOUNT) >= 0 &&
+                discount.compare(MAXIMUM_DISCOUNT) < 0;
     }
 }
