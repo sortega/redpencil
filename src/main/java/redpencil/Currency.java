@@ -4,17 +4,44 @@ import java.text.NumberFormat;
 
 public final class Currency {
 
-    private final int decimals;
+    private final int decimalPositions;
     private final int amount;
 
     public Currency(int amount) {
-        this.decimals = localCurrencyFormat().getMaximumFractionDigits();
-        this.amount = amount * decimals;
+        this(amount, 0);
+    }
+
+    public Currency(int amount, int decimals) {
+        this.decimalPositions = localCurrencyFormat().getMaximumFractionDigits();
+        requireValidAmount(amount);
+        requireValidDecimals(decimals);
+        this.amount = amount * decimalPositions + decimals;
+    }
+
+    private void requireValidAmount(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Invalid amount");
+        }
+    }
+
+    private void requireValidDecimals(int decimals) {
+        if (decimals < 0 || decimals > maxDecimalsValue()) {
+            throw new IllegalArgumentException("Invalid decimals");
+        }
+    }
+
+    private int maxDecimalsValue() {
+        int maxDecimalsValue = 1;
+        for (int i = 0; i < decimalPositions; i++) {
+            maxDecimalsValue *= 10;
+        }
+        maxDecimalsValue--;
+        return maxDecimalsValue;
     }
 
     @Override
     public String toString() {
-        return localCurrencyFormat().format((double) amount / decimals);
+        return localCurrencyFormat().format((double) amount / decimalPositions);
     }
 
     @Override
@@ -22,12 +49,13 @@ public final class Currency {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Currency currency = (Currency) o;
-        return amount == currency.amount && decimals == currency.decimals;
+        return amount == currency.amount &&
+                decimalPositions == currency.decimalPositions;
     }
 
     @Override
     public int hashCode() {
-        return 31 * decimals + amount;
+        return 31 * decimalPositions + amount;
     }
 
     private static NumberFormat localCurrencyFormat() {
