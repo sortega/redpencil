@@ -43,6 +43,12 @@ public class ProductTest {
         assertNoDiscount();
     }
 
+    @Test
+    public void shouldNotConsiderDiscountsOver30Percent() throws Exception {
+        instance.changePrice(new Currency(69, 90));
+        assertNoDiscount();
+    }
+
     private void assertNoDiscount() {
         assertDiscount(Discount.none());
     }
