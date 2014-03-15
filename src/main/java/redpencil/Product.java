@@ -15,4 +15,8 @@ public class Product {
     public void changePrice(Currency price) {
         this.price = price;
     }
+
+    public boolean currentDiscount() {
+        return false;
+    }
 }
