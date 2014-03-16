@@ -25,12 +25,8 @@ class ChangedPrice implements PriceHistory {
         if (history.includes(timestamp)) {
             return history.promotionAt(timestamp);
         }
-        Promotion promotion = currentPromotion();
+        Promotion promotion = history.promotionForPrice(price);
         return promotion.includes(timestamp)
                 ? promotion : promotion.afterPromotion();
-    }
-
-    private Promotion currentPromotion() {
-        return history.promotionForPrice(price);
     }
 }
