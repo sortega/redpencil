@@ -38,4 +38,12 @@ public class ProductPromotionStartTest extends BaseProductTest {
         instance.changePrice(new Currency(900), now);
         assertNoDiscount();
     }
+
+    @Test
+    public void shouldHaveNoPromotionOnTheLast30Days() throws Exception {
+        instance.changePrice(new Currency(90), DateTime.parse("2014-01-01"));
+        instance.changePrice(new Currency(95), DateTime.parse("2014-01-15"));
+        instance.changePrice(new Currency(80), DateTime.parse("2014-02-01"));
+        assertNoDiscount(DateTime.parse("2014-02-01"));
+    }
 }
