@@ -31,7 +31,7 @@ public final class Currency {
     }
 
     private void requireValidDecimals(int decimals) {
-        if (decimals < 0 || decimals > maxDecimalsValue()) {
+        if (decimals < 0 || decimals >= maxDecimalsValue()) {
             throw new IllegalArgumentException("Invalid decimals");
         }
     }
@@ -41,13 +41,13 @@ public final class Currency {
         for (int i = 0; i < decimalPositions; i++) {
             maxDecimalsValue *= 10;
         }
-        maxDecimalsValue--;
         return maxDecimalsValue;
     }
 
     @Override
     public String toString() {
-        return localCurrencyFormat().format((double) amount / decimalPositions);
+        double floatingValue = (double) amount / maxDecimalsValue();
+        return localCurrencyFormat().format(floatingValue);
     }
 
     @Override

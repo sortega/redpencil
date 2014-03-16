@@ -27,7 +27,7 @@ public class ProductTest {
         instance.changePrice(new Currency(80), changeDate);
         DateTime beforePriceChange = changeDate.minusHours(1);
         assertEquals(initialPrice, instance.priceAt(beforePriceChange));
-        DateTime afterPriceChange = changeDate.minusHours(1);
+        DateTime afterPriceChange = changeDate.plusHours(1);
         assertEquals(new Currency(80), instance.priceAt(afterPriceChange));
     }
 
@@ -35,6 +35,7 @@ public class ProductTest {
     public void shouldRegisterPriceChanges() throws Exception {
         instance.changePrice(new Currency(99, 99));
         instance.changePrice(new Currency(80));
+        Currency current = instance.currentPrice();
         assertEquals(new Currency(80), instance.currentPrice());
     }
 

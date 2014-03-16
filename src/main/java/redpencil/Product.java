@@ -1,37 +1,32 @@
 package redpencil;
 
+import org.joda.time.DateTime;
+
 public class Product {
 
-    private static final Discount MINIMUM_DISCOUNT = Discount.of(5);
-    private static final Discount MAXIMUM_DISCOUNT = Discount.of(30);
-
-    private Currency lastPrice;
-    private Currency price;
+    private PriceHistory priceHistory;
 
     public Product(Currency initialPrice) {
-        this.lastPrice = initialPrice;
-        this.price = initialPrice;
+        this.priceHistory = new InitialPrice(initialPrice);
     }
 
     public Currency currentPrice() {
-        return price;
+        return priceAt(DateTime.now());
+    }
+
+    public Currency priceAt(DateTime timestamp) {
+        return priceHistory.priceAt(timestamp);
     }
 
     public void changePrice(Currency price) {
-        this.lastPrice = this.price;
-        this.price = price;
+        changePrice(price, DateTime.now());
+    }
+
+    public void changePrice(Currency price, DateTime changeDate) {
+        priceHistory = new ChangedPrice(price, changeDate, priceHistory);
     }
 
     public Discount currentDiscount() {
-        Discount discount = price.discountFrom(lastPrice);
-        if (!isDiscountInRange(discount)) {
-            return Discount.none();
-        }
-        return discount;
-    }
-
-    private boolean isDiscountInRange(Discount discount) {
-        return discount.compare(MINIMUM_DISCOUNT) >= 0 &&
-                discount.compare(MAXIMUM_DISCOUNT) < 0;
+        return priceHistory.currentDiscount();
     }
 }
