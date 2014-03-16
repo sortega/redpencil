@@ -32,7 +32,7 @@ class PriceHistoryTimestamp {
     public Promotion promotionForPrice(Currency newPrice) {
         Discount discount = newPrice.discountFrom(currentPrice());
         return discount.inPromotionRange()
-                ? new RedPencilPromotion(newPrice, currentPrice())
+                ? new RedPencilPromotion(newPrice, currentPrice(), changeDate)
                 : NoPromotion.get();
     }
 

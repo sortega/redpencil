@@ -1,5 +1,6 @@
 package redpencil.promotion;
 
+import org.joda.time.DateTime;
 import redpencil.currency.Discount;
 
 public final class NoPromotion implements Promotion {
@@ -15,5 +16,10 @@ public final class NoPromotion implements Promotion {
     @Override
     public Discount discount() {
         return Discount.none();
+    }
+
+    @Override
+    public boolean includes(DateTime timestamp) {
+        return false;
     }
 }

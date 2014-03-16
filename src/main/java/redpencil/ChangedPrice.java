@@ -2,6 +2,7 @@ package redpencil;
 
 import org.joda.time.DateTime;
 import redpencil.currency.Currency;
+import redpencil.promotion.NoPromotion;
 import redpencil.promotion.Promotion;
 
 public class ChangedPrice implements PriceHistory {
@@ -25,7 +26,10 @@ public class ChangedPrice implements PriceHistory {
         if (history.includes(timestamp)) {
             return history.promotionAt(timestamp);
         }
-        return currentPromotion();
+        Promotion promotion = currentPromotion();
+        if (promotion.includes(timestamp))
+            return promotion;
+        return NoPromotion.get();
     }
 
     private Promotion currentPromotion() {
