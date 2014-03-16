@@ -1,5 +1,6 @@
 package redpencil;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import redpencil.currency.Currency;
 import redpencil.currency.Discount;
@@ -26,6 +27,15 @@ public class ProductPromotionStartTest extends BaseProductTest {
     @Test
     public void shouldNotConsiderDiscountsOver30Percent() throws Exception {
         instance.changePrice(new Currency(69, 90));
+        assertNoDiscount();
+    }
+
+    @Test
+    public void shouldHaveStablePricesFor30Days() throws Exception {
+        DateTime now = DateTime.now();
+        DateTime aWeekAgo = now.minusWeeks(1);
+        instance.changePrice(new Currency(1000), aWeekAgo);
+        instance.changePrice(new Currency(900), now);
         assertNoDiscount();
     }
 }
