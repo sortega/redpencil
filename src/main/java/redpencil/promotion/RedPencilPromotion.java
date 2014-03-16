@@ -31,9 +31,8 @@ public class RedPencilPromotion implements Promotion {
 
     @Override
     public Promotion changePrice(Currency newPrice, DateTime timestamp) {
-        PriceDrop newDrop = priceDrop.changePrice(newPrice);
-        if (newDrop.inPromotionRange()) {
-            return new RedPencilPromotion(newDrop, start);
+        if (priceDrop.canBeExtendedTo(newPrice)) {
+            return new RedPencilPromotion(priceDrop.changePrice(newPrice), start);
         }
         return new NoPromotion(newPrice);
     }

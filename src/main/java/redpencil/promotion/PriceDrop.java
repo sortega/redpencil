@@ -17,11 +17,13 @@ class PriceDrop {
         return currentPrice.discountFrom(initialPrice);
     }
 
-    public boolean inPromotionRange() {
-        return discount().inPromotionRange();
-    }
-
     public PriceDrop changePrice(Currency newPrice) {
         return new PriceDrop(newPrice, initialPrice);
+    }
+
+    public boolean canBeExtendedTo(Currency newPrice) {
+        Discount newDiscount = newPrice.discountFrom(initialPrice);
+        return newDiscount.inPromotionRange() &&
+                newDiscount.compare(discount()) > 0;
     }
 }
