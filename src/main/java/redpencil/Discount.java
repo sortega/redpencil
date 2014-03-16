@@ -2,6 +2,8 @@ package redpencil;
 
 public final class Discount {
 
+    private static final Discount MINIMUM_PROMOTION_DISCOUNT = Discount.of(5);
+    private static final Discount MAXIMUM_PROMOTION_DISCOUNT = Discount.of(30);
     private static final float DELTA = 0.1f;
     private static final Discount NONE = new Discount(0);
 
@@ -17,6 +19,11 @@ public final class Discount {
 
     private Discount(float percent) {
         this.percent = percent;
+    }
+
+    boolean inPromotionRange() {
+        return this.compare(MINIMUM_PROMOTION_DISCOUNT) >= 0 &&
+                this.compare(MAXIMUM_PROMOTION_DISCOUNT) < 0;
     }
 
     @Override
