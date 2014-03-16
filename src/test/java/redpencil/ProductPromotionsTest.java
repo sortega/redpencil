@@ -2,6 +2,8 @@ package redpencil;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
+import redpencil.currency.Currency;
+import redpencil.currency.Discount;
 
 public class ProductPromotionsTest extends BaseProductTest {
 

@@ -1,6 +1,7 @@
-package redpencil;
+package redpencil.currency;
 
 import org.junit.Test;
+import redpencil.currency.Currency;
 
 public class CurrencyTest {
 

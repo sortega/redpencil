@@ -2,6 +2,7 @@ package redpencil;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
+import redpencil.currency.Currency;
 
 import static org.junit.Assert.assertEquals;
 

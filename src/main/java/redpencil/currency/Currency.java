@@ -1,4 +1,4 @@
-package redpencil;
+package redpencil.currency;
 
 import java.text.NumberFormat;
 

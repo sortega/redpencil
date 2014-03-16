@@ -1,9 +1,10 @@
 package redpencil;
 
 import org.joda.time.DateTime;
+import redpencil.currency.Currency;
+import redpencil.promotion.Promotion;
 
 interface PriceHistory {
     Currency priceAt(DateTime timestamp);
-
-    Discount currentDiscount();
+    Promotion promotionAt(DateTime timestamp);
 }

@@ -1,6 +1,9 @@
 package redpencil;
 
 import org.joda.time.DateTime;
+import redpencil.currency.Currency;
+import redpencil.promotion.NoPromotion;
+import redpencil.promotion.Promotion;
 
 class InitialPrice implements PriceHistory {
 
@@ -16,7 +19,7 @@ class InitialPrice implements PriceHistory {
     }
 
     @Override
-    public Discount currentDiscount() {
-        return Discount.none();
+    public Promotion promotionAt(DateTime timestamp) {
+        return NoPromotion.get();
     }
 }

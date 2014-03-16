@@ -1,6 +1,9 @@
 package redpencil;
 
 import org.joda.time.DateTime;
+import redpencil.currency.Currency;
+import redpencil.currency.Discount;
+import redpencil.promotion.Promotion;
 
 public class Product {
 
@@ -26,7 +29,11 @@ public class Product {
         priceHistory = new ChangedPrice(price, changeDate, priceHistory);
     }
 
-    public Discount currentDiscount() {
-        return priceHistory.currentDiscount();
+    public Discount discountAt(DateTime timestamp) {
+        return promotionAt(timestamp).discount();
+    }
+
+    private Promotion promotionAt(DateTime timestamp) {
+        return priceHistory.promotionAt(timestamp);
     }
 }

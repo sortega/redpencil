@@ -1,4 +1,4 @@
-package redpencil;
+package redpencil.currency;
 
 public final class Discount {
 
@@ -21,7 +21,7 @@ public final class Discount {
         this.percent = percent;
     }
 
-    boolean inPromotionRange() {
+    public boolean inPromotionRange() {
         return this.compare(MINIMUM_PROMOTION_DISCOUNT) >= 0 &&
                 this.compare(MAXIMUM_PROMOTION_DISCOUNT) < 0;
     }

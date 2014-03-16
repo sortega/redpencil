@@ -2,6 +2,8 @@ package redpencil;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
+import redpencil.currency.Currency;
+import redpencil.currency.Discount;
 
 import static org.junit.Assert.assertEquals;
 
