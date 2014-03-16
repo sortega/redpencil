@@ -1,10 +1,10 @@
-package redpencil;
+package redpencil.product;
 
 import org.joda.time.DateTime;
 import redpencil.currency.Currency;
 import redpencil.promotion.Promotion;
 
-public class ChangedPrice implements PriceHistory {
+class ChangedPrice implements PriceHistory {
 
     private final Currency price;
     private final PriceHistoryTimestamp history;

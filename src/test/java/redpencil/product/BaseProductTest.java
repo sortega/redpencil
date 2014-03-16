@@ -1,9 +1,10 @@
-package redpencil;
+package redpencil.product;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
 import redpencil.currency.Currency;
 import redpencil.currency.Discount;
+import redpencil.product.Product;
 
 import static org.junit.Assert.assertEquals;
 
