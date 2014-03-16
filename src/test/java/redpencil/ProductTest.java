@@ -1,5 +1,6 @@
 package redpencil;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,16 +8,27 @@ import static org.junit.Assert.assertEquals;
 
 public class ProductTest {
 
+    private final Currency initialPrice = new Currency(100);
     private Product instance;
 
     @Before
     public void setUp() throws Exception {
-        instance = new Product(new Currency(100));
+        instance = new Product(initialPrice);
     }
 
     @Test
     public void shouldHaveACurrentPrice() throws Exception {
-        assertEquals(new Currency(100), instance.currentPrice());
+        assertEquals(initialPrice, instance.currentPrice());
+    }
+
+    @Test
+    public void shouldRememberLastPrice() throws Exception {
+        DateTime changeDate = DateTime.parse("2014-01-01");
+        instance.changePrice(new Currency(80), changeDate);
+        DateTime beforePriceChange = changeDate.minusHours(1);
+        assertEquals(initialPrice, instance.priceAt(beforePriceChange));
+        DateTime afterPriceChange = changeDate.minusHours(1);
+        assertEquals(new Currency(80), instance.priceAt(afterPriceChange));
     }
 
     @Test
