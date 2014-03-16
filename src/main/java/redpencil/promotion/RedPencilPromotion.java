@@ -26,7 +26,9 @@ public class RedPencilPromotion implements Promotion {
 
     @Override
     public boolean includes(DateTime timestamp) {
-        return !(timestamp.isBefore(start) || timestamp.isAfter(expiration()));
+        boolean tooEarly = timestamp.isBefore(start);
+        boolean tooLate = timestamp.isAfter(expiration());
+        return !(tooEarly || tooLate);
     }
 
     @Override
@@ -34,7 +36,12 @@ public class RedPencilPromotion implements Promotion {
         if (priceDrop.canBeExtendedTo(newPrice)) {
             return new RedPencilPromotion(priceDrop.changePrice(newPrice), start);
         }
-        return new NoPromotion(newPrice);
+        return new NoPromotion(newPrice, timestamp);
+    }
+
+    @Override
+    public NoPromotion afterPromotion() {
+        return new NoPromotion(priceDrop.getCurrentPrice(), expiration());
     }
 
     private DateTime expiration() {

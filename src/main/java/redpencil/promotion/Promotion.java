@@ -8,4 +8,5 @@ public interface Promotion {
     Discount discount();
     boolean includes(DateTime timestamp);
     Promotion changePrice(Currency newPrice, DateTime timestamp);
+    NoPromotion afterPromotion();
 }

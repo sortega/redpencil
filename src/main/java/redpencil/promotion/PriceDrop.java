@@ -26,4 +26,8 @@ class PriceDrop {
         return newDiscount.inPromotionRange() &&
                 newDiscount.compare(discount()) > 0;
     }
+
+    public Currency getCurrentPrice() {
+        return currentPrice;
+    }
 }

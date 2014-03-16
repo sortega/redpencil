@@ -7,9 +7,11 @@ import redpencil.currency.Discount;
 public class NoPromotion implements Promotion {
 
     private final Currency currentPrice;
+    private final DateTime start;
 
-    public NoPromotion(Currency price) {
+    public NoPromotion(Currency price, DateTime start) {
         this.currentPrice = price;
+        this.start = start;
     }
 
     @Override
@@ -24,9 +26,22 @@ public class NoPromotion implements Promotion {
 
     @Override
     public Promotion changePrice(Currency newPrice, DateTime timestamp) {
-        if (newPrice.discountFrom(currentPrice).inPromotionRange()) {
+        if (stableFor30Days(timestamp) && eligiblePrice(newPrice)) {
             return new RedPencilPromotion(newPrice, currentPrice, timestamp);
         }
-        return new NoPromotion(newPrice);
+        return new NoPromotion(newPrice, timestamp);
+    }
+
+    @Override
+    public NoPromotion afterPromotion() {
+        return this;
+    }
+
+    private boolean stableFor30Days(DateTime timestamp) {
+        return !timestamp.minusDays(30).isBefore(start);
+    }
+
+    private boolean eligiblePrice(Currency newPrice) {
+        return newPrice.discountFrom(currentPrice).inPromotionRange();
     }
 }
