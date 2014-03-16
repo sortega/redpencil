@@ -1,5 +1,6 @@
 package redpencil;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 public class ProductPromotionsTest extends BaseProductTest {
@@ -26,4 +27,14 @@ public class ProductPromotionsTest extends BaseProductTest {
         instance.changePrice(new Currency(69, 90));
         assertNoDiscount();
     }
+
+    @Test
+    public void shouldListDiscountsFor30Days() throws Exception {
+        DateTime promotionStart = DateTime.parse("2014-03-15");
+        instance.changePrice(new Currency(90), promotionStart);
+        DateTime promotionEnd = promotionStart.plusDays(30);
+        assertDiscount(Discount.of(10), promotionEnd);
+        assertNoDiscount(promotionEnd.plusSeconds(1));
+    }
+
 }

@@ -1,5 +1,6 @@
 package redpencil;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 
 import static org.junit.Assert.assertEquals;
@@ -14,10 +15,18 @@ public abstract class BaseProductTest {
     }
 
     protected void assertNoDiscount() {
-        assertDiscount(Discount.none());
+        assertNoDiscount(DateTime.now());
+    }
+
+    protected void assertNoDiscount(DateTime timestamp) {
+        assertDiscount(Discount.none(), timestamp);
     }
 
     protected void assertDiscount(Discount discount) {
-        assertEquals(discount, instance.currentDiscount());
+        assertDiscount(discount, DateTime.now());
+    }
+
+    protected void assertDiscount(Discount discount, DateTime timestamp) {
+        assertEquals(discount, instance.discountAt(timestamp));
     }
 }
