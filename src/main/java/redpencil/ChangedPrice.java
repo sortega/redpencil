@@ -29,7 +29,7 @@ public class ChangedPrice implements PriceHistory {
         Promotion promotion = currentPromotion();
         if (promotion.includes(timestamp))
             return promotion;
-        return NoPromotion.get();
+        return new NoPromotion(price);
     }
 
     private Promotion currentPromotion() {

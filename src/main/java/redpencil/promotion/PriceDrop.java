@@ -16,4 +16,12 @@ class PriceDrop {
     public Discount discount() {
         return currentPrice.discountFrom(initialPrice);
     }
+
+    public boolean inPromotionRange() {
+        return discount().inPromotionRange();
+    }
+
+    public PriceDrop changePrice(Currency newPrice) {
+        return new PriceDrop(newPrice, initialPrice);
+    }
 }

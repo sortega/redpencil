@@ -20,6 +20,6 @@ class InitialPrice implements PriceHistory {
 
     @Override
     public Promotion promotionAt(DateTime timestamp) {
-        return NoPromotion.get();
+        return new NoPromotion(price);
     }
 }

@@ -11,7 +11,11 @@ public class RedPencilPromotion implements Promotion {
 
     public RedPencilPromotion(
             Currency currentPrice, Currency initialPrice, DateTime start) {
-        this.priceDrop = new PriceDrop(currentPrice, initialPrice);
+        this(new PriceDrop(currentPrice, initialPrice), start);
+    }
+
+    private RedPencilPromotion(PriceDrop priceDrop, DateTime start) {
+        this.priceDrop = priceDrop;
         this.start = start;
     }
 
@@ -23,6 +27,15 @@ public class RedPencilPromotion implements Promotion {
     @Override
     public boolean includes(DateTime timestamp) {
         return !(timestamp.isBefore(start) || timestamp.isAfter(expiration()));
+    }
+
+    @Override
+    public Promotion changePrice(Currency newPrice, DateTime timestamp) {
+        PriceDrop newDrop = priceDrop.changePrice(newPrice);
+        if (newDrop.inPromotionRange()) {
+            return new RedPencilPromotion(newDrop, start);
+        }
+        return new NoPromotion(newPrice);
     }
 
     private DateTime expiration() {

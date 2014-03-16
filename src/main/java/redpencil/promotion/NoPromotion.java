@@ -1,17 +1,16 @@
 package redpencil.promotion;
 
 import org.joda.time.DateTime;
+import redpencil.currency.Currency;
 import redpencil.currency.Discount;
 
-public final class NoPromotion implements Promotion {
+public class NoPromotion implements Promotion {
 
-    private static final NoPromotion INSTANCE = new NoPromotion();
+    private final Currency currentPrice;
 
-    public static Promotion get() {
-        return INSTANCE;
+    public NoPromotion(Currency price) {
+        this.currentPrice = price;
     }
-
-    private NoPromotion() {}
 
     @Override
     public Discount discount() {
@@ -21,5 +20,13 @@ public final class NoPromotion implements Promotion {
     @Override
     public boolean includes(DateTime timestamp) {
         return false;
+    }
+
+    @Override
+    public Promotion changePrice(Currency newPrice, DateTime timestamp) {
+        if (newPrice.discountFrom(currentPrice).inPromotionRange()) {
+            return new RedPencilPromotion(newPrice, currentPrice, timestamp);
+        }
+        return new NoPromotion(newPrice);
     }
 }
