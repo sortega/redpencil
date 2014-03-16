@@ -39,4 +39,11 @@ public class ProductPromotionsTest extends BaseProductTest {
         assertNoDiscount(promotionEnd.plusSeconds(1));
     }
 
+    @Test
+    public void shouldNotInterruptPromotionOnFurtherPriceDrop() throws Exception {
+        instance.changePrice(new Currency(90), DateTime.parse("2014-01-01"));
+        instance.changePrice(new Currency(88), DateTime.parse("2014-01-15"));
+        assertDiscount(Discount.of(12), DateTime.parse("2014-01-16"));
+        assertNoDiscount(DateTime.parse("2014-02-01"));
+    }
 }
